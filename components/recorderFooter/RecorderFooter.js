@@ -11,10 +11,10 @@ export default function RecorderFooter({
   isRecording,
   isPlaying,
   progress = '20%',
+  isPlayerVisible,
 }) {
-  const toggleRecordingState = () => {
-    isRecording ? onStop() : onStart();
-    setIsRecording((prevRecordingState) => !prevRecordingState);
+  const toggleRecordingHandler = (event) => {
+    isRecording ? onStop(event) : onStart(event);
   };
 
   const toggleRecordingPlaying = () => {
@@ -26,15 +26,22 @@ export default function RecorderFooter({
     <div className={styles.footerContainer}>
       <div
         className={`${styles.recorder} ${isRecording && styles.stopRecorder}`}
-        onClick={toggleRecordingState}
+        onClick={(event) => toggleRecordingHandler(event)}
       ></div>
-      <div
-        className={`${styles.button} ${isPlaying && styles.paused}`}
-        onClick={toggleRecordingPlaying}
-      ></div>
-      <div className={styles.progressBackdrop}>
-        <div className={styles.progressBar} style={{ width: progress }}></div>
-      </div>
+      {isPlayerVisible && (
+        <>
+          <div
+            className={`${styles.button} ${isPlaying && styles.paused}`}
+            onClick={toggleRecordingPlaying}
+          ></div>
+          <div className={styles.progressBackdrop}>
+            <div
+              className={styles.progressBar}
+              style={{ width: progress }}
+            ></div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

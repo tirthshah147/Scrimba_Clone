@@ -9,40 +9,19 @@ import RecorderFooter from '../components/recorderFooter/RecorderFooter';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-  const { recordings, recorderElementRef, isRecording, setIsRecording } =
-    useRecorder();
-  const [isPlaying, setIsPlaying] = useState(false);
+  const {
+    recordings,
+    recorderElementRef,
+    isRecording,
+    setIsRecording,
+    isPlaying,
+    setIsPlaying,
+    isPlayerVisible,
+    onRecordingStop,
+    onRecordingStart,
+  } = useRecorder();
+
   console.log(recordings);
-
-  // const printSelectorForClickedElement = (event) => {
-  //   console.log(event);
-  //   console.log(
-  //     event.type,
-  //     getSelector(event.target),
-  //     event.pageX,
-  //     event.pageY,
-  //   );
-  // };
-
-  // const printXYCoordinatesWhenMouseMoveOnPage = (event) => {
-  //   console.log(event);
-  // console.log(
-  //   event.type,
-  //   // getSelector(event.target),
-  //   event.pageX,
-  //   event.pageY,
-  // );
-  // };
-
-  // const printOnKeyDown = (event) => {
-  //   console.log(event);
-  // console.log(
-  //   event.type,
-  //   getSelector(event.target),
-  //   // event.pageX,
-  //   // event.pageY,
-  // );
-  // };
 
   // useEffect(() => {
   //   console.log(
@@ -91,6 +70,9 @@ export default function Home() {
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
         setIsRecording={setIsRecording}
+        isPlayerVisible={isPlayerVisible}
+        onStart={onRecordingStart}
+        onStop={onRecordingStop}
       />
       <main
         className={styles.main}
