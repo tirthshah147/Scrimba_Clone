@@ -5,6 +5,8 @@ import styles from '../styles/Home.module.css';
 import { useEffect, useState } from 'react';
 import useRecorder from '../lib/hooks/useRecorder';
 import RecorderFooter from '../components/recorderFooter/RecorderFooter';
+import usePlayer from '../lib/hooks/usePlayer';
+import Cursor from '../components/cursor/Cursor';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,49 +15,19 @@ export default function Home() {
     recordings,
     recorderElementRef,
     isRecording,
-    setIsRecording,
-    isPlaying,
-    setIsPlaying,
     isPlayerVisible,
     onRecordingStop,
     onRecordingStart,
+    recordedTime,
+    recorderEndTime,
+    recorderStartTime,
   } = useRecorder();
 
-  console.log(recordings);
-
-  // useEffect(() => {
-  //   console.log(
-  //     document.querySelector(
-  //       '#__next>MAIN:nth-child(1)>DIV:nth-child(1)>INPUT:nth-child(1)',
-  //     ),
-  //   );
-  // }, []);
-
-  // useEffect(() => {
-  //   // const arr = [1, 11, 111, 1111, 11111, 11111];
-  //   // let index = 0;
-
-  //   // setTimeout(() => {
-  //   //   document.elementFromPoint(513, 540).click();
-  //   // }, 3000);
-
-  //   // document
-  //   //   .querySelector(
-  //   //     '#__next>MAIN:nth-child(1)>DIV:nth-child(3)>A:nth-child(2)>H2:nth-child(1)',
-  //   //   )
-  //   //   .click();
-  //   // const interval = setInterval(() => {
-  //   //   if (index === 5) {
-  //   //     clearInterval(interval);
-  //   //   }
-  //   //   document.querySelector(
-  //   //     '#__next>MAIN:nth-child(1)>DIV:nth-child(1)>INPUT:nth-child(1)',
-  //   //   ).value = arr[index];
-  //   //   index = index + 1;
-  //   // }, 200);
-
-  //   // return () => clearInterval(interval);
-  // }, []);
+  const { isPlaying, setIsPlaying, cursorRef, progress } = usePlayer(
+    recordings,
+    recorderStartTime,
+    recorderEndTime
+  );
 
   return (
     <>
@@ -65,22 +37,18 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <Cursor cursorRef={cursorRef} />
       <RecorderFooter
         isRecording={isRecording}
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
-        setIsRecording={setIsRecording}
         isPlayerVisible={isPlayerVisible}
         onStart={onRecordingStart}
         onStop={onRecordingStop}
+        recordedTime={recordedTime}
+        progress={progress}
       />
-      <main
-        className={styles.main}
-        ref={recorderElementRef}
-        // onClick={(event) => printSelectorForClickedElement(event)}
-        // onMouseMove={(event) => printXYCoordinatesWhenMouseMoveOnPage(event)}
-        // onKeyDown={(event) => printOnKeyDown(event)}
-      >
+      <main className={styles.main} ref={recorderElementRef}>
         <div className={styles.description}>
           <input className={styles.input} placeholder='Type & Test here' />
           <div>

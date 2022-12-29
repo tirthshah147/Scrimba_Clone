@@ -6,12 +6,12 @@ export default function RecorderFooter({
   onStop = console.log,
   onRecordingPlay = console.log,
   onRecordingPause = console.log,
-  setIsRecording,
   setIsPlaying,
   isRecording,
   isPlaying,
-  progress = '20%',
+  progress,
   isPlayerVisible,
+  recordedTime,
 }) {
   const toggleRecordingHandler = (event) => {
     isRecording ? onStop(event) : onStart(event);
@@ -28,6 +28,9 @@ export default function RecorderFooter({
         className={`${styles.recorder} ${isRecording && styles.stopRecorder}`}
         onClick={(event) => toggleRecordingHandler(event)}
       ></div>
+      {isRecording ? null : (
+        <div className={styles.timeDisplay}>{recordedTime}</div>
+      )}
       {isPlayerVisible && (
         <>
           <div
