@@ -21,12 +21,14 @@ export default function Home() {
     recordedTime,
     recorderEndTime,
     recorderStartTime,
+    recordedAudio,
   } = useRecorder();
 
   const { isPlaying, setIsPlaying, cursorRef, progress } = usePlayer(
     recordings,
     recorderStartTime,
-    recorderEndTime
+    recorderEndTime,
+    recordedAudio
   );
 
   return (
